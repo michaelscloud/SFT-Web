@@ -1,0 +1,29 @@
+{
+  "name": "sft-web",
+  "version": "1.0.0",
+  "description": "Startup Founders Toolkit website (Cloudflare Pages)",
+  "scripts": {
+    "build": "node scripts/build.mjs && tailwindcss -i src/input.css -o public/css/site.css --minify",
+    "dev": "npm run build && wrangler pages dev public --d1 DB",
+    "test": "npm run build && node --test test/*.test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/michaelscloud/SFT-Web.git"
+  },
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/michaelscloud/SFT-Web/issues"
+  },
+  "homepage": "https://github.com/michaelscloud/SFT-Web#readme",
+  "devDependencies": {
+    "@fontsource/dm-sans": "^5.1.0",
+    "lucide-static": "^0.460.0",
+    "tailwindcss": "^3.4.17",
+    "wrangler": "^4.148.0"
+  },
+  "private": true,
+  "engines": {
+    "node": ">=20"
+  }
+}

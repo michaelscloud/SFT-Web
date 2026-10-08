@@ -1,0 +1,7 @@
+# Copy to .dev.vars for local development (never commit .dev.vars).
+# This is Cloudflare's published Turnstile test secret: it always passes.
+TURNSTILE_SECRET_KEY=1x0000000000000000000000000000000AA
+# Optional: leave blank to skip notification emails locally.
+RESEND_API_KEY=
+NOTIFY_EMAIL=
+FROM_EMAIL=
