@@ -1,6 +1,7 @@
 # Startup Founders Toolkit — website
 
-The SFT marketing site, moved from Canva to Cloudflare Pages.
+The SFT marketing site, moved from Canva to Cloudflare Pages. For now it is hosted at
+**https://discinc.uk**. The address is a build setting (`SITE_URL`), so moving domains needs no code change.
 
 - **Static site:** HTML + Tailwind CSS, built into `public/`.
 - **Forms:** the contact form and waitlist both post to a Cloudflare Pages Function
@@ -13,10 +14,10 @@ The SFT marketing site, moved from Canva to Cloudflare Pages.
 |---|---|
 | `src/*.html` | Page sources. `<i data-lucide="name">` becomes an inline SVG icon at build time. |
 | `src/input.css` | Tailwind entry point, plus the self-hosted DM Sans font. |
-| `static/` | Copied into `public/` as-is: JS, images, `_headers`, `robots.txt`, `sitemap.xml`. |
+| `static/` | Copied into `public/` as-is: JS, images, `_headers`. |
 | `functions/api/contact.js` | The form endpoint. |
 | `lib/submission.js` | Form validation, Turnstile check, D1 storage and email. |
-| `scripts/build.mjs` | The build. |
+| `scripts/build.mjs` | The build. Also writes `robots.txt` and `sitemap.xml`. |
 | `test/` | Tests (`npm test`). |
 
 ## Local development
@@ -35,8 +36,8 @@ The site runs at http://localhost:8788 with a local database. The Turnstile test
    `npx wrangler d1 create sft-web`
    The `submissions` table is created automatically on the first form submission.
 2. **Create a Turnstile widget:** in the Cloudflare dashboard, open Turnstile and choose Add widget.
-   Add your domain and your `*.pages.dev` domain. Keep a note of the site key and the secret key.
-3. **Set up Resend:** create an account at resend.com, verify your domain, and create an API key.
+   Add `discinc.uk` and your `*.pages.dev` domain. Keep a note of the site key and the secret key.
+3. **Set up Resend:** create an account at resend.com, verify `discinc.uk` as a sending domain, and create an API key.
 4. **Create the Pages project:** in the dashboard, go to Workers & Pages → Create → Pages →
    Connect to Git and choose this repo.
    - Build command: `npm run build`
@@ -46,11 +47,12 @@ The site runs at http://localhost:8788 with a local database. The Turnstile test
 
      | Name | Type | Value |
      |---|---|---|
+     | `SITE_URL` | Text | The site's public address, no trailing slash. Defaults to `https://discinc.uk`. |
      | `TURNSTILE_SITE_KEY` | Text | Turnstile site key (used at build time) |
      | `TURNSTILE_SECRET_KEY` | Secret | Turnstile secret key |
      | `RESEND_API_KEY` | Secret | Resend API key |
      | `NOTIFY_EMAIL` | Text | Where enquiries are sent, e.g. `info@startupfounderstoolkit.com` |
-     | `FROM_EMAIL` | Text | A sender on your verified domain, e.g. `SFT Website <website@startupfounderstoolkit.com>` |
+     | `FROM_EMAIL` | Text | A sender on your verified domain, e.g. `SFT Website <website@discinc.uk>` |
 
    - **Bindings:** add a D1 database binding named `DB` that points to `sft-web`.
 6. Redeploy, test the forms on the `*.pages.dev` address, then add your domain under
@@ -76,5 +78,5 @@ You can also browse them in the dashboard under Storage & Databases → D1 → s
       `og:image` tag back to `src/index.html`.
 - [ ] Finish `src/privacy.html`: fill in everything in [square brackets] and check it matches how
       you actually handle data.
-- [ ] Check the domain `startupfounderstoolkit.com` in the canonical link, `robots.txt` and
-      `sitemap.xml`.
+- [ ] When the site moves to its permanent domain, change `SITE_URL` in Cloudflare, add the
+      new domain to the Turnstile widget and Resend, and redeploy.

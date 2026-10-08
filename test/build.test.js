@@ -2,18 +2,26 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile, access } from 'node:fs/promises';
-import { renderPage } from '../scripts/build.mjs';
+import { renderPage, robotsTxt, sitemapXml } from '../scripts/build.mjs';
 
 const read = (p) => readFile(new URL(`../${p}`, import.meta.url), 'utf8');
 
-test('renderPage inlines icons with their classes and fills the site key', async () => {
-  const html = await renderPage('<i data-lucide="mail" class="w-5 h-5"></i><div data-sitekey="%%TURNSTILE_SITE_KEY%%">', { siteKey: 'KEY' });
+test('renderPage inlines icons with their classes and fills the site key and URL', async () => {
+  const html = await renderPage('<i data-lucide="mail" class="w-5 h-5"></i><div data-sitekey="%%TURNSTILE_SITE_KEY%%"><link href="%%SITE_URL%%/privacy">', { siteKey: 'KEY', siteUrl: 'https://example.test' });
   assert.match(html, /<svg class="lucide lucide-mail w-5 h-5" aria-hidden="true"/);
   assert.match(html, /data-sitekey="KEY"/);
+  assert.match(html, /href="https:\/\/example.test\/privacy"/);
+});
+
+test('robots.txt and sitemap.xml point at the site URL', () => {
+  assert.match(robotsTxt('https://example.test'), /Sitemap: https:\/\/example.test\/sitemap.xml/);
+  const xml = sitemapXml('https://example.test');
+  assert.match(xml, /<loc>https:\/\/example.test\/<\/loc>/);
+  assert.match(xml, /<loc>https:\/\/example.test\/privacy<\/loc>/);
 });
 
 test('renderPage fails loudly on an unknown icon', async () => {
-  await assert.rejects(renderPage('<i data-lucide="no-such-icon"></i>', { siteKey: 'k' }), /Unknown Lucide icon/);
+  await assert.rejects(renderPage('<i data-lucide="no-such-icon"></i>', { siteKey: 'k', siteUrl: 'u' }), /Unknown Lucide icon/);
 });
 
 for (const page of ['index.html', 'privacy.html', '404.html']) {
