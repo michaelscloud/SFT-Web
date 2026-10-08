@@ -1,0 +1,69 @@
+---
+// Shared page shell: <head> (meta, canonical, Open Graph, fonts, CSS, scripts) and <body>.
+// No inline <script> or <style>: the CSP in static/_headers only allows files from this site.
+import '../styles/global.css';
+import dmSans400 from '@fontsource/dm-sans/files/dm-sans-latin-400-normal.woff2?url';
+import dmSans700 from '@fontsource/dm-sans/files/dm-sans-latin-700-normal.woff2?url';
+
+interface Props {
+  title: string;
+  description?: string;
+  /** Canonical path, e.g. "/privacy". Leave out for pages that shouldn't have one (404). */
+  path?: string;
+  /** Open Graph title and description, for pages worth sharing. */
+  og?: { title: string; description: string };
+  noindex?: boolean;
+  themeColor?: string;
+  htmlClass?: string;
+  bodyClass?: string;
+  /** Preload the main font weights (pages that show text above the fold straight away). */
+  preloadFonts?: boolean;
+  /** Load site.js and Turnstile (pages with the nav, calculator, quiz, timeline or forms). */
+  interactive?: boolean;
+}
+
+const { title, description, path, og, noindex, themeColor, htmlClass, bodyClass, preloadFonts, interactive } = Astro.props;
+const site = String(Astro.site).replace(/\/+$/, '');
+const url = path === undefined ? undefined : `${site}${path}`;
+---
+<!doctype html>
+<html lang="en-GB" class={htmlClass}>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{title}</title>
+  {description && <meta name="description" content={description}>}
+  {noindex && <meta name="robots" content="noindex">}
+  {url && <link rel="canonical" href={url}>}
+
+  {og && (
+    <>
+      <meta property="og:type" content="website">
+      <meta property="og:site_name" content="Startup Founders Toolkit">
+      <meta property="og:title" content={og.title}>
+      <meta property="og:description" content={og.description}>
+      {url && <meta property="og:url" content={url}>}
+      <meta name="twitter:card" content="summary">
+    </>
+  )}
+
+  <link rel="icon" href="/images/favicon.svg" type="image/svg+xml">
+  {themeColor && <meta name="theme-color" content={themeColor}>}
+
+  {preloadFonts && (
+    <>
+      <link rel="preload" href={dmSans400} as="font" type="font/woff2" crossorigin>
+      <link rel="preload" href={dmSans700} as="font" type="font/woff2" crossorigin>
+    </>
+  )}
+  {interactive && (
+    <>
+      <script is:inline src="/js/site.js" defer></script>
+      <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+    </>
+  )}
+</head>
+<body class={bodyClass}>
+  <slot />
+</body>
+</html>
