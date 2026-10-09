@@ -23,6 +23,10 @@ for (const page of pages) {
   test(`every local file referenced by ${page} exists`, async () => {
     const html = await read(page);
     const refs = [...html.matchAll(/(?:src|href)="(\/[^"#?]*)"/g)].map((m) => m[1]);
+    // Every candidate in a srcset, e.g. srcset="/a.webp 1x, /b.webp 2x".
+    for (const [, srcset] of html.matchAll(/srcset="([^"]*)"/g)) {
+      refs.push(...srcset.split(',').map((c) => c.trim().split(/\s+/)[0]));
+    }
     assert.ok(refs.length > 0);
     for (const ref of refs) {
       // Page links like "/" and "/privacy" are served from index.html and privacy.html.
@@ -45,6 +49,17 @@ for (const page of pages) {
     assert.doesNotMatch(html, /href="javascript:/i, `${page} has a javascript: link`);
   });
 }
+
+test('director photos are optimised WebP with a 2x version', async () => {
+  const html = await read('index.html');
+  for (const name of ['Rob Kerner', 'Jonathan Evans', 'Caroline Hall']) {
+    const img = html.match(new RegExp(`<img [^>]*alt="${name}"[^>]*>`))?.[0];
+    assert.ok(img, `no photo for ${name}`);
+    assert.match(img, /src="\/_astro\/[\w.-]+\.webp"/);
+    assert.match(img, /srcset="\/_astro\/[\w.-]+\.webp 1x, \/_astro\/[\w.-]+\.webp 2x"/);
+    assert.match(img, /class="[^"]*\bgrayscale\b/);
+  }
+});
 
 test('icons are inlined as SVGs that screen readers skip', async () => {
   const html = await read('index.html');
