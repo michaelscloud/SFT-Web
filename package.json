@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "description": "Startup Founders Toolkit website (Cloudflare Pages)",
   "scripts": {
-    "build": "node scripts/build.mjs && tailwindcss -i src/input.css -o public/css/site.css --minify",
+    "build": "astro build",
     "dev": "npm run build && wrangler pages dev public --d1 DB",
+    "dev:ui": "astro dev",
     "test": "npm run build && node --test test/*.test.js"
   },
   "repository": {
@@ -18,12 +19,13 @@
   "homepage": "https://github.com/michaelscloud/SFT-Web#readme",
   "devDependencies": {
     "@fontsource/dm-sans": "^5.1.0",
+    "astro": "^7.3.8",
     "lucide-static": "^0.460.0",
     "tailwindcss": "^3.4.17",
     "wrangler": "^4.148.0"
   },
   "private": true,
   "engines": {
-    "node": ">=20"
+    "node": ">=22.12"
   }
 }

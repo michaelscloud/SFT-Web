@@ -1,0 +1,37 @@
+---
+// Fixed site navigation: transparent over the hero, solid once the page scrolls,
+// with a mobile menu (both handled by static/js/site.js). Links start with / so they
+// work from any page.
+import Icon from './Icon.astro';
+---
+<!-- Navigation: transparent over the hero, solid once the page scrolls (see site.js) -->
+<header id="site-nav" class="fixed inset-x-0 top-0 z-50 transition-colors duration-300">
+  <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" aria-label="Main">
+    <div class="flex justify-between items-center h-20 md:h-28">
+      <a href="/#home" class="flex-shrink-0">
+        <img class="h-14 md:h-20 w-auto" src="/images/logo.svg" alt="Startup Founders Toolkit" width="250" height="80">
+      </a>
+      <div class="hidden md:flex items-center space-x-8">
+        <a href="/#home" class="text-white hover:text-accent-500 font-bold transition-colors">Home</a>
+        <a href="/#expertise" class="text-white hover:text-accent-500 font-bold transition-colors">Experts</a>
+        <a href="/#tools" class="text-white hover:text-accent-500 font-bold transition-colors">Tools</a>
+        <a href="/#process" class="text-white hover:text-accent-500 font-bold transition-colors">Our Process</a>
+        <a href="/#contact" class="bg-accent-500 hover:bg-accent-600 text-primary-900 px-5 py-2.5 rounded-md font-bold transition-colors">Get in Touch</a>
+      </div>
+      <button id="menu-toggle" type="button" class="md:hidden p-2 -mr-2 text-white" aria-controls="mobile-menu" aria-expanded="false">
+        <span class="sr-only">Open menu</span>
+        <span data-menu-icon="open"><Icon name="menu" class="w-7 h-7" /></span>
+        <span data-menu-icon="close" class="hidden"><Icon name="x" class="w-7 h-7" /></span>
+      </button>
+    </div>
+    <div id="mobile-menu" class="md:hidden hidden pb-6">
+      <div class="flex flex-col gap-1">
+        <a href="/#home" class="text-white font-bold py-3 border-b border-white/10">Home</a>
+        <a href="/#expertise" class="text-white font-bold py-3 border-b border-white/10">Experts</a>
+        <a href="/#tools" class="text-white font-bold py-3 border-b border-white/10">Tools</a>
+        <a href="/#process" class="text-white font-bold py-3 border-b border-white/10">Our Process</a>
+        <a href="/#contact" class="mt-4 bg-accent-500 text-primary-900 text-center px-5 py-3 rounded-md font-bold">Get in Touch</a>
+      </div>
+    </div>
+  </nav>
+</header>

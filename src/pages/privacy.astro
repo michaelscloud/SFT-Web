@@ -1,15 +1,12 @@
-<!doctype html>
-<html lang="en-GB">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Privacy policy | Startup Founders Toolkit</title>
-  <meta name="description" content="How Startup Founders Toolkit collects and uses your personal data.">
-  <link rel="canonical" href="%%SITE_URL%%/privacy">
-  <link rel="icon" href="/images/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="/css/site.css">
-</head>
-<body class="min-h-screen bg-slate-50 text-slate-800 antialiased">
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout
+  title="Privacy policy | Startup Founders Toolkit"
+  description="How Startup Founders Toolkit collects and uses your personal data."
+  path="/privacy"
+  bodyClass="min-h-screen bg-slate-50 text-slate-800 antialiased"
+>
   <header class="bg-primary-900">
     <div class="max-w-3xl mx-auto px-4 sm:px-6 h-20 flex items-center">
       <a href="/"><img class="h-14 w-auto" src="/images/logo.svg" alt="Startup Founders Toolkit — home" width="250" height="80"></a>
@@ -60,5 +57,4 @@
 
     <p class="pt-8"><a href="/" class="font-semibold text-primary-900">← Back to home</a></p>
   </main>
-</body>
-</html>
+</BaseLayout>

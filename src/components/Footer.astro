@@ -1,0 +1,76 @@
+---
+// Footer with contact details and the contact form (id="contact", the target of
+// the nav's "Get in Touch" links).
+import Icon from './Icon.astro';
+import { TURNSTILE_SITE_KEY } from '../config.mjs';
+---
+<!-- Footer / Contact -->
+<footer id="contact" class="bg-primary-900 text-white pt-20 pb-10">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-16 mb-16">
+      <div>
+        <h2 class="text-3xl font-bold mb-6">Let's discuss how SFT can support your vision.</h2>
+        <p class="text-blue-200 mb-8 max-w-md">Reach out to learn more about our services and how we can tailor our fractional experts to your specific needs.</p>
+        <ul class="space-y-4">
+          <li class="flex items-center gap-4">
+            <span class="w-10 h-10 flex-shrink-0 bg-primary-800 rounded-full flex items-center justify-center text-accent-500"><Icon name="mail" class="w-5 h-5" /></span>
+            <a href="mailto:info@startupfounderstoolkit.com" class="text-blue-100 hover:text-white break-all">info@startupfounderstoolkit.com</a>
+          </li>
+          <li class="flex items-center gap-4">
+            <span class="w-10 h-10 flex-shrink-0 bg-primary-800 rounded-full flex items-center justify-center text-accent-500"><Icon name="phone" class="w-5 h-5" /></span>
+            <a href="tel:+441273807634" class="text-blue-100 hover:text-white">0127 380 7634</a>
+          </li>
+          <li class="flex items-center gap-4">
+            <span class="w-10 h-10 flex-shrink-0 bg-primary-800 rounded-full flex items-center justify-center text-accent-500"><Icon name="map-pin" class="w-5 h-5" /></span>
+            <address class="not-italic text-blue-100">4th Floor, Park Gate, Preston Road, Brighton, BN1 8AF</address>
+          </li>
+        </ul>
+      </div>
+      <div class="bg-white rounded-xl p-6 sm:p-8 text-slate-800">
+        <h3 class="text-xl font-bold text-primary-900 mb-6">Contact Us</h3>
+        <form class="js-form space-y-4" action="/api/contact" method="post" novalidate>
+          <input type="hidden" name="type" value="contact">
+          <div class="hp-field" aria-hidden="true"><label>Website <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label for="contact-name" class="block text-sm font-medium text-slate-700 mb-1">Name <span class="text-red-600" aria-hidden="true">*</span></label>
+              <input id="contact-name" name="name" type="text" required maxlength="200" autocomplete="name" class="w-full border border-slate-300 rounded-md px-3 py-2 focus:outline-none focus:border-primary-900 focus:ring-1 focus:ring-primary-900">
+            </div>
+            <div>
+              <label for="contact-company" class="block text-sm font-medium text-slate-700 mb-1">Company</label>
+              <input id="contact-company" name="company" type="text" maxlength="200" autocomplete="organization" class="w-full border border-slate-300 rounded-md px-3 py-2 focus:outline-none focus:border-primary-900 focus:ring-1 focus:ring-primary-900">
+            </div>
+          </div>
+          <div>
+            <label for="contact-email" class="block text-sm font-medium text-slate-700 mb-1">Email address <span class="text-red-600" aria-hidden="true">*</span></label>
+            <input id="contact-email" name="email" type="email" required maxlength="254" autocomplete="email" class="w-full border border-slate-300 rounded-md px-3 py-2 focus:outline-none focus:border-primary-900 focus:ring-1 focus:ring-primary-900">
+          </div>
+          <div>
+            <label for="contact-phone" class="block text-sm font-medium text-slate-700 mb-1">Phone number</label>
+            <input id="contact-phone" name="phone" type="tel" maxlength="50" autocomplete="tel" class="w-full border border-slate-300 rounded-md px-3 py-2 focus:outline-none focus:border-primary-900 focus:ring-1 focus:ring-primary-900">
+          </div>
+          <div>
+            <label for="contact-message" class="block text-sm font-medium text-slate-700 mb-1">Leave a message <span class="text-red-600" aria-hidden="true">*</span></label>
+            <textarea id="contact-message" name="message" rows="4" required maxlength="5000" class="w-full border border-slate-300 rounded-md px-3 py-2 focus:outline-none focus:border-primary-900 focus:ring-1 focus:ring-primary-900"></textarea>
+          </div>
+          <p class="text-xs text-slate-500">We'll use your details to reply to your enquiry. See our <a href="/privacy" class="underline hover:text-primary-900">privacy policy</a>.</p>
+          <div class="flex items-start gap-2">
+            <input id="contact-marketing" name="marketing_opt_in" type="checkbox" class="mt-0.5 w-4 h-4 accent-primary-900">
+            <label for="contact-marketing" class="text-xs text-slate-500">Optional: I'd also like to receive occasional marketing emails from SFT. You can unsubscribe at any time.</label>
+          </div>
+          <div class="cf-turnstile" data-sitekey={TURNSTILE_SITE_KEY} data-size="flexible"></div>
+          <button type="submit" class="w-full bg-accent-500 hover:bg-accent-600 text-primary-900 font-bold py-3 rounded-md transition-colors disabled:opacity-60">Submit</button>
+          <p class="form-status hidden text-sm font-semibold text-center" role="status"></p>
+        </form>
+      </div>
+    </div>
+    <div class="border-t border-primary-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+      <div class="flex items-center gap-2"><Icon name="settings" class="h-6 w-6 text-accent-500" /><span class="font-bold text-lg tracking-tight">SFT</span></div>
+      <p class="text-blue-200 text-sm">© 2026 Startup Founders Toolkit. All rights reserved. · <a href="/privacy" class="hover:text-white underline">Privacy policy</a></p>
+      <div class="flex gap-4">
+        <a href="https://www.linkedin.com/company/startup-founders-toolkit/" class="text-blue-200 hover:text-white" target="_blank" rel="noopener noreferrer"><span class="sr-only">LinkedIn</span><Icon name="linkedin" class="w-5 h-5" /></a>
+        <a href="https://www.instagram.com/startupfounderstoolkit/" class="text-blue-200 hover:text-white" target="_blank" rel="noopener noreferrer"><span class="sr-only">Instagram</span><Icon name="instagram" class="w-5 h-5" /></a>
+      </div>
+    </div>
+  </div>
+</footer>

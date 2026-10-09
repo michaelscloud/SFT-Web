@@ -1,0 +1,29 @@
+---
+// Inlines a Lucide icon (lucide-static) as an SVG at build time.
+// Unknown names fail the build. Browse icons at https://lucide.dev/icons
+import { readFileSync } from 'node:fs';
+import { createRequire } from 'node:module';
+import path from 'node:path';
+
+interface Props {
+  name: string;
+  class?: string;
+}
+
+const { name, class: cls = '' } = Astro.props;
+const iconDir = path.dirname(createRequire(import.meta.url).resolve('lucide-static/icons/mail.svg'));
+
+let svg: string;
+try {
+  svg = readFileSync(path.join(iconDir, `${path.basename(name)}.svg`), 'utf8');
+} catch {
+  throw new Error(`Unknown Lucide icon "${name}"`);
+}
+svg = svg
+  .replace(/<!--[\s\S]*?-->/, '')
+  .replace(`class="lucide lucide-${name}"`, `class="${`lucide lucide-${name} ${cls}`.trim()}" aria-hidden="true" focusable="false"`)
+  .replace(/\s+/g, ' ')
+  .replace(/> </g, '><')
+  .trim();
+---
+<Fragment set:html={svg} />
