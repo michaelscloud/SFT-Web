@@ -4,6 +4,14 @@ import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import Icon from '../components/Icon.astro';
 import { TURNSTILE_SITE_KEY } from '../config.mjs';
+import { Image } from 'astro:assets';
+import robKerner from '../assets/directors/rob-kerner.jpg';
+import jonathanEvans from '../assets/directors/jonathan-evans.jpg';
+import carolineHall from '../assets/directors/caroline-hall.jpg';
+
+// Director photos: 96px circles, with a 2x version for high-density screens. They're
+// shown in black and white with the grayscale class, so remove it to show colour.
+const photo = { width: 96, height: 96, densities: [1, 2], format: 'webp', loading: 'lazy' } as const;
 ---
 <BaseLayout
   title="Startup Founders Toolkit | Fractional C-suite expertise for founders"
@@ -231,7 +239,7 @@ import { TURNSTILE_SITE_KEY } from '../config.mjs';
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
         <div class="bg-white p-6 rounded-xl border border-slate-200 flex flex-col items-center text-center">
           <div class="w-24 h-24 rounded-full mb-4 overflow-hidden border-4 border-blue-50">
-            <img class="w-full h-full object-cover grayscale" loading="lazy" src="/images/director-rob-kerner.svg" alt="Rob Kerner" width="192" height="192">
+            <Image class="w-full h-full object-cover grayscale" src={robKerner} alt="Rob Kerner" {...photo} />
           </div>
           <h3 class="font-bold text-lg text-primary-900">Rob Kerner</h3>
           <p class="text-sm font-semibold text-accent-700 mb-3">Fractional CEO &amp; Ops</p>
@@ -239,7 +247,7 @@ import { TURNSTILE_SITE_KEY } from '../config.mjs';
         </div>
         <div class="bg-white p-6 rounded-xl border border-slate-200 flex flex-col items-center text-center">
           <div class="w-24 h-24 rounded-full mb-4 overflow-hidden border-4 border-blue-50">
-            <img class="w-full h-full object-cover grayscale" loading="lazy" src="/images/director-jonathan-evans.svg" alt="Jonathan Evans" width="192" height="192">
+            <Image class="w-full h-full object-cover grayscale" src={jonathanEvans} alt="Jonathan Evans" {...photo} />
           </div>
           <h3 class="font-bold text-lg text-primary-900">Jonathan Evans</h3>
           <p class="text-sm font-semibold text-accent-700 mb-3">Marketing &amp; Copywriting</p>
@@ -247,7 +255,7 @@ import { TURNSTILE_SITE_KEY } from '../config.mjs';
         </div>
         <div class="bg-white p-6 rounded-xl border border-slate-200 flex flex-col items-center text-center">
           <div class="w-24 h-24 rounded-full mb-4 overflow-hidden border-4 border-blue-50">
-            <img class="w-full h-full object-cover" loading="lazy" src="/images/director-caroline-hall.svg" alt="Caroline Hall" width="192" height="192">
+            <Image class="w-full h-full object-cover grayscale" src={carolineHall} alt="Caroline Hall" {...photo} />
           </div>
           <h3 class="font-bold text-lg text-primary-900">Caroline Hall</h3>
           <p class="text-sm font-semibold text-accent-700 mb-3">Talent Acquisition</p>

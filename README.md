@@ -74,8 +74,14 @@ optional before using `<Nav />` on another page. Pages are added to `sitemap.xml
 
 ### Images
 
-The placeholder images in `static/images/` are served as they are. When real photos arrive, put them in
-`src/assets/` and use Astro's `<Image>` component (`astro:assets`) to resize and compress them at build time.
+Photos go in `src/assets/` and are shown with Astro's `<Image>` component (`astro:assets`), which
+resizes and compresses them into WebP at build time. The director photos in `src/assets/directors/` are
+400×400 head-and-shoulders crops, shown as 96px circles (with a 2x version for sharp screens). They're
+displayed in black and white by the `grayscale` class in `src/pages/index.astro`, so the files themselves
+keep their colour. To replace one, crop the new photo to a square around the head and shoulders and save
+it over the old file.
+
+The remaining placeholders in `static/images/` (`logo.svg`, `hero.svg`) are served as they are.
 
 ## Cloudflare setup (one-off)
 
@@ -118,8 +124,8 @@ You can also browse them in the dashboard under Storage & Databases → D1 → s
 
 ## Before launch
 
-- [ ] Replace the placeholder images in `static/images/`: `logo.svg`, `hero.svg` and the
-      three `director-*.svg` files. If you use JPG or WebP files, update the `src` in
+- [ ] Replace the placeholder images in `static/images/`: `logo.svg` and `hero.svg`.
+      If you use JPG or WebP files, update the `src` in
       `src/pages/index.astro` (and `src/components/Nav.astro` for the logo) to match, or move them
       to `src/assets/` and use `astro:assets` (see Images above). Keep the hero image under ~300 KB.
 - [ ] Add a 1200×630 image at `static/images/og-image.png` for link previews, then add the
